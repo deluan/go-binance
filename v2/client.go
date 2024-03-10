@@ -35,6 +35,9 @@ type TimeInForceType string
 // NewOrderRespType define response JSON verbosity
 type NewOrderRespType string
 
+// SelfTradePreventionModeType defines self trade prevention mode
+type SelfTradePreventionModeType string
+
 // OrderStatusType define order status type
 type OrderStatusType string
 
@@ -134,6 +137,11 @@ const (
 	NewOrderRespTypeACK    NewOrderRespType = "ACK"
 	NewOrderRespTypeRESULT NewOrderRespType = "RESULT"
 	NewOrderRespTypeFULL   NewOrderRespType = "FULL"
+
+	SelfTradePreventionModeTypeNone        = "NONE"
+	SelfTradePreventionModeTypeExpireTaker = "EXPIRE_TAKER"
+	SelfTradePreventionModeTypeExpireMaker = "EXPIRE_MAKER"
+	SelfTradePreventionModeTypeExpireBoth  = "EXPIRE_BOTH"
 
 	OrderStatusTypeNew             OrderStatusType = "NEW"
 	OrderStatusTypePartiallyFilled OrderStatusType = "PARTIALLY_FILLED"

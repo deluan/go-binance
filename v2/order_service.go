@@ -8,19 +8,20 @@ import (
 
 // CreateOrderService create order
 type CreateOrderService struct {
-	c                *Client
-	symbol           string
-	side             SideType
-	orderType        OrderType
-	timeInForce      *TimeInForceType
-	newOrderRespType *NewOrderRespType
-	quantity         *string
-	quoteOrderQty    *string
-	price            *string
-	newClientOrderID *string
-	stopPrice        *string
-	trailingDelta    *string
-	icebergQuantity  *string
+	c                       *Client
+	symbol                  string
+	side                    SideType
+	orderType               OrderType
+	timeInForce             *TimeInForceType
+	newOrderRespType        *NewOrderRespType
+	selfTradePreventionMode *SelfTradePreventionModeType
+	quantity                *string
+	quoteOrderQty           *string
+	price                   *string
+	newClientOrderID        *string
+	stopPrice               *string
+	trailingDelta           *string
+	icebergQuantity         *string
 }
 
 // Symbol set symbol
@@ -95,6 +96,12 @@ func (s *CreateOrderService) NewOrderRespType(newOrderRespType NewOrderRespType)
 	return s
 }
 
+// SelfTradePreventionMode set selfTradePreventionMode
+func (s *CreateOrderService) SelfTradePreventionMode(selfTradePreventionMode SelfTradePreventionModeType) *CreateOrderService {
+	s.selfTradePreventionMode = &selfTradePreventionMode
+	return s
+}
+
 func (s *CreateOrderService) createOrder(ctx context.Context, endpoint string, opts ...RequestOption) (data []byte, err error) {
 	r := &request{
 		method:   http.MethodPost,
@@ -132,6 +139,9 @@ func (s *CreateOrderService) createOrder(ctx context.Context, endpoint string, o
 	}
 	if s.newOrderRespType != nil {
 		m["newOrderRespType"] = *s.newOrderRespType
+	}
+	if s.selfTradePreventionMode != nil {
+		m["selfTradePreventionMode"] = *s.selfTradePreventionMode
 	}
 	r.setFormParams(m)
 	data, err = s.c.callAPI(ctx, r, opts...)
